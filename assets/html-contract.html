@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><title>Deterministic render contract</title>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden}canvas{display:block}</style>
+<canvas id="stage"></canvas>
+<script>
+// Interface smoke example only. Replace the design after the director plan is approved.
+const canvas=document.getElementById('stage');
+const ctx=canvas.getContext('2d');
+window.DUR=3;
+window.READY=false;
+window.render=function(t){
+  if(!Number.isFinite(t))throw new Error('time must be finite');
+  const w=innerWidth,h=innerHeight;
+  if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+  ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.fillStyle='#f3f0e8';ctx.fillRect(0,0,w,h);
+  const p=Math.min(1,Math.max(0,t/window.DUR)),e=1-Math.pow(1-p,3);
+  ctx.fillStyle='#24352c';ctx.beginPath();ctx.arc(w*(0.2+0.6*e),h/2,h*0.12,0,Math.PI*2);ctx.fill();
+};
+document.fonts.ready.then(()=>{window.render(0);window.READY=true;});
+</script></html>

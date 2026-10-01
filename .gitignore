@@ -1,0 +1,21 @@
+# 输出与缓存（skill 目录只存工具与参考，产物放项目目录）
+out/
+research/
+cache/
+node_modules/
+
+# 媒体产物
+*.mp4
+*.webm
+*.mov
+*.wav
+*.mp3
+
+# 系统
+.DS_Store
+Thumbs.db
+*.swp
+
+# 凭据
+.env
+.env.*
