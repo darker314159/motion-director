@@ -1,7 +1,7 @@
 # Motion Director
 
 > 用**真实优秀视频**驱动的 Motion Graphics 制作导演 skill。
-> 不凭空编画面——先让你从 859 条真实案例里挑参考，再设计分镜，最后出片验收。
+> 不凭空编画面——先让你从 837 条真实案例 + Skillry 在线案例库里挑参考，再设计分镜，最后出片验收。
 
 一个把「需求 → 参考 → 方案 → 关键帧 → 成片」串成闭环的 Agent Skill。
 核心约束一句话：**没看过参考就不能说看过，没确认过方案就不许写场景代码。**
@@ -74,7 +74,7 @@ motion-director/
 ├── SKILL.md                    # 工作流骨架（9 阶段 + 铁律）
 ├── agents/openai.yaml          # ChatGPT / Codex 接口声明
 ├── assets/
-│   ├── catalog.json            # 859 条真实案例元数据快照（962KB）
+│   ├── catalog.json            # 837 条真实案例元数据快照（1.03MB）
 │   ├── html-contract.html      # 渲染契约示例
 │   ├── icon.svg
 │   └── project-template.json   # motion-project.json 模板
@@ -111,10 +111,24 @@ python scripts/catalog.py search \
 
 刷新失败会**如实报告日期和失败源**，不会拿旧数据假装是新的。
 
+### Skillry 在线案例库（联网时必查）
+
+除了上面三个可 JSON 刷新的数据源，skill 还会检查 **Skillry Opus 5.5 在线案例库**：
+
+```
+https://skillry.dev/ai-videos/opus-5-5
+```
+
+它提供 Motion graphics / Explainers / 3D scenes / Games 分类，按需求打开详情页补充快照未覆盖的案例。
+页面上的 **Original 与 Remake 是不同版本**——skill 会分别标注，不会把复刻效果归给原作者。
+
+> ⚠️ 边界说明：Skillry 是**实时网页检索**，不参与 `catalog.py refresh` 的 JSON 更新，
+> 两者分别记录。JSON 刷新成功 ≠ 全站同步。`catalog.json` 里的 `gallery_sources` 字段标明此边界。
+
 ## 📜 出处与授权
 
 本 skill 最初由 **LemoLab** 创作，黑蜂情感 AI 在取得作者授权后重新整理发布。
-内嵌案例库来自 4 个 MIT 许可的公开项目（859 条记录，含 sha256 校验）。
+内嵌案例库聚合自 4 个 MIT 许可的公开项目（**837 条记录**，按 X 原帖 ID 去重后，含 sha256 校验）。
 
 **`assets/catalog.json` 只存元数据和链接，不含任何视频文件本体。**
 视频著作权归各原作者，选素材前请自行确认授权范围。

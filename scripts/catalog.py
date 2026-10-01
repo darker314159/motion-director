@@ -7,6 +7,7 @@ SOURCES = {
     'guanmo': 'https://raw.githubusercontent.com/guanmo-ai/awesome-ai-motion/main/data/cases.json',
     'lemo': 'https://raw.githubusercontent.com/lemomo-ai/lemo-opuscar/main/styleboard/catalog.json',
 }
+GALLERY_SOURCES = [{'source':'skillry','url':'https://skillry.dev/ai-videos/opus-5-5','mode':'live_page_review_plus_yihui_links','refresh_status':'not_fetched_by_json_refresh'}]
 GROUPS = {
     'product': ['product', 'promo', 'saas', 'launch', '产品', '宣传', '广告'],
     'explainer': ['explainer', 'explain', 'education', 'tutorial', '讲解', '科普', '教学', '教程'],
@@ -86,6 +87,9 @@ def normalize(source, data):
                 tech_tags=[],prompt_status='style_document',prompt_url=base.replace('/tree/','/blob/')+'/STYLE.md',code_url=base+'/demo',entry_type='style')
         row['sources']=[source]
         row['source_links']=[row['source_url']]
+        if source == 'yihui' and safe_url(x.get('skillry_url')):
+            row['skillry_url']=safe_url(x['skillry_url'])
+            row['source_links'].append(row['skillry_url'])
         row['review_status']='metadata_only'
         row['tag_evidence']='derived_from_metadata'
         out.append(row)
@@ -102,7 +106,7 @@ def merge(rows):
             old[field]=sorted(set(old.get(field,[])+row.get(field,[])))
         if row.get('summary'):
             old['summary']=row['summary'];old['title']=row['title'];old['category']=row['category']
-        for field in ('video_url','duration','poster_url','code_url','resources'):
+        for field in ('video_url','duration','poster_url','code_url','resources','skillry_url'):
             if not old.get(field) and row.get(field):old[field]=row[field]
         if old.get('prompt_status') in ('unknown','partial') and row.get('prompt_status') not in ('unknown','partial'):
             old['prompt_status']=row['prompt_status'];old['prompt_url']=row['prompt_url']
@@ -127,7 +131,7 @@ def refresh(args):
             statuses.append(dict(source=source,url=url,status='ok',records=len(result),sha256=hashlib.sha256(raw).hexdigest()))
         except Exception as exc:
             statuses.append(dict(source=source,url=url,status='failed',error=str(exc)))
-    result=dict(schema_version=1,fetched_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),source_status=statuses,entries=merge(rows))
+    result=dict(schema_version=1,fetched_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),source_status=statuses,gallery_sources=GALLERY_SOURCES,entries=merge(rows))
     write_json(args.out,result)
     print(json.dumps({'out':args.out,'entries':len(result['entries']),'source_status':statuses},ensure_ascii=False))
     return 0 if all(s['status']=='ok' for s in statuses) else 2
@@ -152,7 +156,7 @@ def search(args):
         if row.get('video_url'):score+=0.5
         results.append(dict(row,match_score=round(score,2),match_reasons=reasons))
     results.sort(key=lambda r:(-r['match_score'],r['id']))
-    result={'catalog_date':data.get('fetched_at'),'source_status':data.get('source_status',[]),'query':args.query,'total_matches':len(results),'zero_matches':len(results)==0,'score_kind':'lexical_prefilter_not_visual_quality','candidates':results[:args.limit]}
+    result={'catalog_date':data.get('fetched_at'),'source_status':data.get('source_status',[]),'gallery_sources':data.get('gallery_sources',GALLERY_SOURCES),'query':args.query,'total_matches':len(results),'zero_matches':len(results)==0,'score_kind':'lexical_prefilter_not_visual_quality','candidates':results[:args.limit]}
     if args.out:write_json(args.out,result)
     if args.board:board(args.board,result)
     print(json.dumps(result,ensure_ascii=False,indent=2))
@@ -163,7 +167,7 @@ def board(path, result):
     for i,r in enumerate(result['candidates'],1):
         poster=f'<img loading="lazy" referrerpolicy="no-referrer" src="{esc(safe_url(r.get("poster_url")),quote=True)}" alt="参考封面；不是运动核验" onerror="this.hidden=true">' if r.get('poster_url') else ''
         video=f'<video controls preload="none" playsinline src="{esc(safe_url(r.get("video_url")),quote=True)}"></video>' if r.get('video_url') else ''
-        links=' '.join(f'<a target="_blank" rel="noopener noreferrer" href="{esc(safe_url(r.get(k)),quote=True)}">{label}</a>' for k,label in [('watch_url','查看作品/目录'),('source_url','原始出处'),('prompt_url','提示词/风格说明'),('code_url','实现入口')] if safe_url(r.get(k)))
+        links=' '.join(f'<a target="_blank" rel="noopener noreferrer" href="{esc(safe_url(r.get(k)),quote=True)}">{label}</a>' for k,label in [('watch_url','查看作品/目录'),('skillry_url','Skillry 原作/复刻对照'),('source_url','原始出处'),('prompt_url','提示词/风格说明'),('code_url','实现入口')] if safe_url(r.get(k)))
         cards.append(f'<article><h2>{i}. {esc(r["title"])}</h2><p>@{esc(r["author"])} · {r.get("duration") or "时长未知"} · {esc(r["entry_type"])}</p>{poster}{video}<p>{esc(r.get("summary",""))}</p><p>{esc(", ".join(r["tags"]))}</p><p class="note">仅元数据初筛；打开播放不自动标记为 agent 已核验。</p><nav>{links}</nav></article>')
     page='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Motion 参考候选</title><style>body{font:16px/1.6 system-ui;margin:32px;background:#f5f4ef;color:#191919}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}article{background:white;padding:20px;border:1px solid #ddd;border-radius:14px}img,video{width:100%;max-height:270px;object-fit:contain}nav{display:flex;gap:15px;flex-wrap:wrap}.note{color:#666;font-size:14px}h2{font-size:20px}</style><h1>参考候选</h1><p>选择编号后回到对话告诉 agent；可分别选择节奏、构图和转场。封面/播放器引用原始来源，不托管视频。</p><p>数据日期：'+esc(str(result['catalog_date']))+'</p><main>'+''.join(cards)+'</main></html>'
     path=pathlib.Path(path);path.parent.mkdir(parents=True,exist_ok=True);path.write_text(page,encoding='utf-8')

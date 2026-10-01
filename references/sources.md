@@ -6,6 +6,7 @@
 |---|---|---|
 | 用户 motion设计提示词.txt | 五组需求、方案确认、三张真实关键帧、确定性渲染、逐镜检查 | 已重写到 SKILL.md 与导演规范，保留用户意图 |
 | 观默文章 | 导演层、运动因果、分层错相、节拍、光声与逐帧自检 | https://x.com/guanmo_ai/status/2105146205915283737 与 https://x.com/i/article/2104936034232619009 |
+| Skillry Opus 5.5 视频库 | 按类型查找案例、原作与复刻对照、公开提示词及技术标签；联网时必查 | https://skillry.dev/ai-videos/opus-5-5 |
 | yihui-dev/awesome-opus5-5-videos | 案例、作者、原帖、技术标签与公开提示词入口 | https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/data/videos.json |
 | guanmo-ai/awesome-ai-motion | 用途分类、时长、真实视频链接、提示词完整性、工程入口 | https://github.com/guanmo-ai/awesome-ai-motion/blob/main/data/cases.json |
 | Lemo-Opuscar | 风格词汇、叙事弧、代表镜头、同一时间轴、声画检查 | https://github.com/lemomo-ai/lemo-opuscar/blob/main/DIRECTOR.md 与 TECHNIQUE.md；styles/README.md；styleboard/catalog.json |

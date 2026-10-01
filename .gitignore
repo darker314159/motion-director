@@ -4,6 +4,12 @@ research/
 cache/
 node_modules/
 
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
 # 媒体产物
 *.mp4
 *.webm
