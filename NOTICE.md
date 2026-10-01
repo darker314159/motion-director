@@ -50,6 +50,7 @@ yihui 的 475 条记录中带有 `skillry_url` 字段，属**间接收录**，�
 |---|---|---|
 | v1.0 | 2026-10-01 | 首次收录（16 文件，catalog 962KB） |
 | v1.1 | 2026-10-01 | 上游更新：`SKILL.md` / `catalog.py` / `reference-selection.md` / `sources.md` / `catalog.json` 五文件替换。新增 **Skillry Opus 5.5 在线案例库**接入（475 条 yihui 记录附带 `skillry_url` + `gallery_sources` 边界声明），`catalog.json` 962KB → 1.03MB |
+| v1.2 | 2026-10-01 | 上游更新：6 文件替换。**新增「一键成片」模式（`one_click`）**——全流程委托、自主决策、直接交付真实 MP4，三重确认改为内部审查但保留 `delegated` 记录；配套改动 `agents/openai.yaml`（描述与默认 prompt）、`assets/project-template.json`（新增 `mode` / `decision_log` 字段）、`sources.md` / `directing-and-qa.md` / `reference-selection.md` 的模式分支说明。`SKILL.md` 11KB → 15KB |
 
 ## 免责声明
 

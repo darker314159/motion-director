@@ -6,7 +6,26 @@
 一个把「需求 → 参考 → 方案 → 关键帧 → 成片」串成闭环的 Agent Skill。
 核心约束一句话：**没看过参考就不能说看过，没确认过方案就不许写场景代码。**
 
+提供**两种模式**：逐步确认（默认，每道门都问你）和一键成片（你全权委托，直接交付真实 MP4）。
+
 ---
+
+## 🚀 两种模式
+
+| | 🐢 逐步确认 `guided`（默认） | ⚡ 一键成片 `one_click` |
+|---|---|---|
+| 触发 | 默认行为 | 说「一键成片」「一键出片」「中间你决定」 |
+| 需求 | 五组问题逐项确认 | 自主补全合理缺省，记入 `decision_log` |
+| 参考 | 给 3–5 个候选你选 | 内部评估 3–5 个方向自选 |
+| 方案 | 展示 `DIRECTOR.md` 等你确认 | 内部定稿直接实现 |
+| 视觉 | 三张关键帧 + 样片给你看 | 内部检查，发现问题自己修 |
+| 交付 | 分段确认后出片 | **直接给可播放/下载的真实 MP4** |
+| `approvals` | 逐项 `pending` → `approved` | 全流程标 `delegated` + 引用你的原话 |
+
+**一键模式不会偷工减料**——渲染、音画同步、成片验收步骤一个不少，只是把「问你」换成「自己判断并记录依据」。
+
+> ⚠️ 关键区别：一键模式标的是 **`delegated`（你委托的）**，不是 `approved`（你逐项看过的）。
+> skill 不会把自主决策伪装成你的确认。中途你随时可以喊停、改回逐步模式，或指定某个环节必须问你。
 
 ## 🎬 它解决什么问题
 
@@ -35,6 +54,8 @@
 | 参考确认 | 必须真正看过视频 | 只见封面 → 标「仅元数据初筛」 |
 | 方案确认 | `motion-project.json` 完整 | 沉默 ≠ 确认 |
 | 视觉确认 | 静帧 + 3–5s 样片 | 静帧不能证明运动质量 |
+
+> 一键模式下三道门由 agent 内部审查替代，但**记录照写**，依据指向你的一键委托原话。
 
 **失效规则**（改了什么就重开哪个门，不必从头再来）：
 
@@ -71,13 +92,13 @@ Claude Code / WorkBuddy 会自动识别 `SKILL.md` 并按描述触发。
 
 ```
 motion-director/
-├── SKILL.md                    # 工作流骨架（9 阶段 + 铁律）
+├── SKILL.md                    # 工作流骨架（两种模式 + 9 阶段 + 铁律）
 ├── agents/openai.yaml          # ChatGPT / Codex 接口声明
 ├── assets/
 │   ├── catalog.json            # 837 条真实案例元数据快照（1.03MB）
 │   ├── html-contract.html      # 渲染契约示例
 │   ├── icon.svg
-│   └── project-template.json   # motion-project.json 模板
+│   └── project-template.json   # motion-project.json 模板（含 mode/decision_log）
 ├── references/
 │   ├── directing-and-qa.md     # 导演与验收规范
 │   ├── reference-selection.md  # 参考检索与选择

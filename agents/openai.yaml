@@ -1,7 +1,7 @@
 interface:
   display_name: Motion Director 动态视频导演
-  short_description: 确认需求、检查依赖、选择真实视频参考，再设计分镜并制作验收动态视频
-  default_prompt: 用 $motion-director 帮我制作动态视频，先确认需求、检查制作环境并提供参考视频供我选择。
+  short_description: 支持逐步确认或一键成片，自主选参考、设计分镜并制作验收动态视频
+  default_prompt: 用 $motion-director 帮我制作动态视频；若我说一键成片，中间环节由你决定并直接交付成片，否则逐步确认。
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

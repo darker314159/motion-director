@@ -19,18 +19,50 @@
     "assets_policy": "code_visuals_plus_user_supplied_assets",
     "execution_target": null
   },
-  "technology": {"route": null, "manim_variant": null, "graphics": [], "audio": null, "reason": null},
-  "environment": {"report": null, "status": "unchecked", "smoke_evidence": []},
+  "technology": {
+    "route": null,
+    "manim_variant": null,
+    "graphics": [],
+    "audio": null,
+    "reason": null
+  },
+  "environment": {
+    "report": null,
+    "status": "unchecked",
+    "smoke_evidence": []
+  },
   "references": [],
   "approvals": {
-    "brief": {"status": "pending", "evidence": "", "scope": "", "revision": 1},
-    "references": {"status": "pending", "evidence": "", "scope": "", "revision": 1},
-    "director": {"status": "pending", "evidence": "", "scope": "", "revision": 1},
-    "visual": {"status": "pending", "evidence": "", "scope": "", "revision": 1}
+    "brief": {
+      "status": "pending",
+      "evidence": "",
+      "scope": "",
+      "revision": 1
+    },
+    "references": {
+      "status": "pending",
+      "evidence": "",
+      "scope": "",
+      "revision": 1
+    },
+    "director": {
+      "status": "pending",
+      "evidence": "",
+      "scope": "",
+      "revision": 1
+    },
+    "visual": {
+      "status": "pending",
+      "evidence": "",
+      "scope": "",
+      "revision": 1
+    }
   },
   "shots": [],
   "audio_cues": [],
   "preview_files": [],
   "deliverables": {},
-  "unresolved": []
+  "unresolved": [],
+  "mode": "guided",
+  "decision_log": []
 }
